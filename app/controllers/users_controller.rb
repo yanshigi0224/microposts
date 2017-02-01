@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   def show
     @user=User.find(params[:id])
+    @microposts = @user.microposts.order(created_at: :desc)
   end
   
   def new
@@ -33,6 +34,7 @@ class UsersController < ApplicationController
      # @userは編集対象ユーザー
     if (current_user != @user)
       redirect_to root_path
+      return
     end   
     
     if (@user.update(user_profile))
